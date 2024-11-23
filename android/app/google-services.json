@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "12369727051",
+    "project_id": "challenge-tsyp-cas-app",
+    "storage_bucket": "challenge-tsyp-cas-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12369727051:android:c3ca577acfc78fcbd4c7ce",
+        "android_client_info": {
+          "package_name": "com.example.challenge_tsyp_cas_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7YV0xcryBiTpABGCNkm17YV93coF00f8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
