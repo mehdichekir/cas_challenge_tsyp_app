@@ -20,18 +20,18 @@ class BarChartDashboard extends StatelessWidget {
     final consumptionDataSteg = [20.0, 50.0, 30.0];
     double sumConsSteg =
         consumptionDataSteg.reduce((value, element) => value + element);
-    final TotalProd =
+    final totalProd =
         sumProd - (sumConsPannel + sumConsSteg + sumConsCar + sumConsNeighbor);
     return Column(
       children: [
         Container(
           height: 400,
           padding: const EdgeInsets.all(20),
-          child: Container(
+          child: SizedBox(
             child: BarChart(
               BarChartData(
                 maxY: 250,
-                gridData: FlGridData(show: false),
+                gridData: const FlGridData(show: false),
                 borderData: FlBorderData(show: true),
                 barGroups: [
                   BarChartGroupData(
@@ -182,10 +182,10 @@ class BarChartDashboard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.orange),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                Text('Neighbor'),
+                const Text('Neighbor'),
               ],
             ),
             const SizedBox(
@@ -216,7 +216,7 @@ class BarChartDashboard extends StatelessWidget {
           height: 30,
         ),
         Container(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           height: 130,
           width: 130,
           decoration: BoxDecoration(
@@ -233,13 +233,13 @@ class BarChartDashboard extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(right: 5,left: 5,top: 2,bottom: 2),
+                      padding: const EdgeInsets.only(right: 5,left: 5,top: 2,bottom: 2),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.lightGreen,
                         border: Border.all()
                       ),
-                      child: Text('$TotalProd',style: TextStyle(fontSize: 18),)),
+                      child: Text('$totalProd',style: const TextStyle(fontSize: 18),)),
                   ],
                 )),
                 const SizedBox(height: 2,),

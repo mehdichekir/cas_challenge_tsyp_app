@@ -1,4 +1,3 @@
-import 'package:cas_tsyp_app/screens/choose_type_screen.dart';
 import 'package:cas_tsyp_app/widgets/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,13 +15,14 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   var isLoading = false;
   final auth = FirebaseAuth.instance;
+
   void submitAuthForm(
-    String email,
-    String password,
-    String userName,
-    bool isLogin,
-    BuildContext ctx,
-  ) async {
+      String email,
+      String password,
+      String userName,
+      bool isLogin,
+      BuildContext ctx,
+      ) async {
     UserCredential userCredential;
     try {
       setState(() {
@@ -33,25 +33,21 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (ctx)=>ChooseTypeScreen())
-        );
+        // Remove navigation as AuthWrapper will handle it
       } else {
         userCredential = await auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (ctx)=>ChooseTypeScreen())
-        );
-         await FirebaseFirestore.instance
+        // Remove navigation as AuthWrapper will handle it
+
+        await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
             .set({
           'username': userName,
           'email': email,
         });
-        print("database");
       }
     } on PlatformException catch (err) {
       var message = 'An error occurred, Please check your credentials.';
@@ -68,21 +64,26 @@ class _AuthScreenState extends State<AuthScreen> {
         isLoading = false;
       });
     } catch (err) {
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(
+          content: Text('An error occurred. Please try again later.'),
+          backgroundColor: Colors.red,
+        ),
+      );
       setState(() {
         isLoading = false;
       });
-
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: AuthForm(
-        submitAuthForm,
-        isLoading
-      )
+        backgroundColor: Colors.white,
+        body: AuthForm(
+            submitAuthForm,
+            isLoading
+        )
     );
   }
 }

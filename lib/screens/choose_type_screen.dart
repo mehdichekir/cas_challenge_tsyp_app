@@ -1,6 +1,6 @@
 import 'package:cas_tsyp_app/screens/energy_dashboard.dart';
 import 'package:cas_tsyp_app/screens/energy_history.dart';
-import 'package:cas_tsyp_app/screens/real_time_visualtion.dart';
+import 'package:cas_tsyp_app/screens/real_time_visualization.dart';
 import 'package:cas_tsyp_app/screens/system_status.dart';
 import 'package:cas_tsyp_app/widgets/screen_type.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class ChooseTypeScreen extends StatelessWidget {
       'Energy Management Dashboard': EnergyDashboard.routeName,
       'Energy History': EnergyHistory.routeName,
       'System Status': SystemStatus.routeName,
-      'Real Time Data Visualisation': RealTimeVisualtion.routeName,
+      'Real Time Data Visualisation': RealTimeVisualization.routeName,
     };
 
     return Scaffold(

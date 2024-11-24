@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
             )),
-           const  SizedBox(height: 100,),
+           const  SizedBox(height: 60,),
              Stack(
                children:[
                 Container(

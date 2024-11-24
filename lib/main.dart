@@ -1,15 +1,12 @@
-import 'package:cas_tsyp_app/screens/choose_type_screen.dart';
 import 'package:cas_tsyp_app/screens/energy_dashboard.dart';
 import 'package:cas_tsyp_app/screens/energy_history.dart';
-import 'package:cas_tsyp_app/screens/home_screen.dart';
 import 'package:cas_tsyp_app/screens/auth_screen.dart';
-import 'package:cas_tsyp_app/screens/real_time_visualtion.dart';
+import 'package:cas_tsyp_app/screens/real_time_visualization.dart';
 import 'package:cas_tsyp_app/screens/system_status.dart';
-import 'package:cas_tsyp_app/widgets/line_chart_history.dart';
-import 'package:cas_tsyp_app/widgets/line_chart_real_time.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'helpers/auth_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,13 +40,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: const AuthWrapper(),
       routes: {
-        AuthScreen.routeName:(context)=>const AuthScreen(),
-        EnergyDashboard.routeName:(context)=>EnergyDashboard(),
-        EnergyHistory.routeName:(context)=>EnergyHistory(),
-        RealTimeVisualtion.routeName:(context)=>RealTimeVisualtion(),
-        SystemStatus.routeName:(context)=>SystemStatus()
+        AuthScreen.routeName:(context)=> const AuthScreen(),
+        EnergyDashboard.routeName:(context)=> EnergyDashboard(),
+        EnergyHistory.routeName:(context)=> EnergyHistory(),
+        RealTimeVisualization.routeName:(context)=> RealTimeVisualization(),
+        SystemStatus.routeName:(context)=> SystemStatus()
       },
     );
   }
