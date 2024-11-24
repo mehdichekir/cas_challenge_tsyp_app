@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../helpers/smart_home_controller.dart';
 
+
 class ControlsTab extends StatefulWidget {
+  final controller = Get.find<SmartHomeController>();
 
   ControlsTab({super.key});
 
@@ -12,137 +14,134 @@ class ControlsTab extends StatefulWidget {
 }
 
 class _ControlsTabState extends State<ControlsTab> {
-  final controller = Get.find<SmartHomeController>();
-
   @override
   Widget build(BuildContext context) {
     return Obx(() => ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            // Status Card
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'System Status',
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      padding: const EdgeInsets.all(16),
+      children: [
+        // Status Card
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('System Status',
+                  style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                const SizedBox(height: 8),
+                _buildStatusRow('Temperature',
+                    '${widget.controller.status.value!.environment.temperature}°C', Icons.thermostat),
+                _buildStatusRow('Humidity',
+                    '${widget.controller.status.value!.environment.humidity}%', Icons.water),
+                _buildStatusRow('AC',
+                    widget.controller.status.value!.environment.fanRunning
+                        ? 'Running'
+                        : 'Off', Icons.ac_unit),
+                Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.blue,
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: GestureDetector(
+                    onTap: () => widget.controller.sendCommand('TOGGLE AC'),
+                    child: const Icon(
+                      Icons.power_settings_new,
+                      color: Colors.white,
                     ),
-                    const SizedBox(height: 8),
-                    _buildStatusRow(
-                        'Temperature',
-                        '${controller.status.value['environment']?['temperature']}°C',
-                        Icons.thermostat),
-                    _buildStatusRow(
-                        'Humidity',
-                        '${controller.status.value['environment']?['humidity']}%',
-                        Icons.water),
-                    _buildStatusRow(
-                        'AC',
-                        controller.status.value['environment']
-                                    ?['fan_running'] ==
-                                true
-                            ? 'Running'
-                            : 'Off',
-                        Icons.ac_unit),
-                  ],
-                ),
-              ),
+                  ),
+                )
+              ],
             ),
-             Card(
-              child: Padding(
-                padding:const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'AC control',
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            setState(() {
-                              controller.status.value['environment']?['fan_running'] = !controller.status.value['environment']?['fan_running'] ;
-                            });
-                          },
-                          icon: const Icon(Icons.timer),
-                          label: Text(controller.status.value['environment']?['fan_running'] ==true
-                              ? 'Turn off Air Conditionner'
-                              : 'Turn on Air Conditionner'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          ),
+        ),
 
-            // Doors Control Card
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        Card(
+          child: Padding(
+            padding:const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'AC control',
+                  style:
+                  TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Doors Control',
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () =>
-                                controller.sendCommand('SET GARAGE OPEN'),
-                            child: const Text('Open Garage'),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () => {
-                              controller.sendCommand('SET GARAGE CLOSE'),
-                              NotificationService().showFireNotification()
-                            },
-                            child: const Text('Close Garage'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () =>
-                                controller.sendCommand('SET FRONTDOOR OPEN'),
-                            child: const Text('Open Front Door'),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () =>
-                                controller.sendCommand('SET FRONTDOOR CLOSE'),
-                            child: const Text('Close Front Door'),
-                          ),
-                        ),
-                      ],
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        widget.controller.sendCommand('SET AC ON');
+                      },
+                      icon: const Icon(Icons.timer),
+                      label: Text(widget.controller.status.value?.environment.fanRunning == true
+                          ? 'Turn off Air Conditioner'
+                          : 'Turn on Air Conditioner'),
                     ),
                   ],
                 ),
-              ),
+              ],
             ),
+          ),
+        ),
+
+        // Doors Control Card
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Doors Control',
+                  style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            widget.controller.sendCommand('SET GARAGE OPEN'),
+                        child: const Text('Open Garage'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => {
+                          widget.controller.sendCommand('SET GARAGE CLOSE'),
+                          NotificationService().showFireNotification(),
+                        },
+                        child: const Text('Close Garage'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            widget.controller.sendCommand('SET FRONTDOOR OPEN'),
+                        child: const Text('Open Front Door'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            widget.controller.sendCommand('SET FRONTDOOR CLOSE'),
+                        child: const Text('Close Front Door'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
 
             // Lights Control Card
             Card(
@@ -186,7 +185,7 @@ class _ControlsTabState extends State<ControlsTab> {
   Widget _buildLightControls(String location) {
     return LightControls(
       location: location,
-      sendCommand: controller.sendCommand,
+      sendCommand: widget.controller.sendCommand,
     );
   }
 }
