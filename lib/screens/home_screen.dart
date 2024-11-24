@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         behavior: HitTestBehavior.opaque, 
         child: Container(
           width: double.infinity, 
-          height: 200,
+          height: 400,
           padding: EdgeInsets.only(
             top: 16,
             left: 16,
@@ -35,26 +35,34 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 16),
               const Text(
                 'Welcome to Energify',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.green),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               const Text(
                 'Power up your life with clean energy.',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16,
+                color: Colors.lightBlue),
                 textAlign: TextAlign.center,
+                
               ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(ctx).pushReplacement(
+              const SizedBox(height: 60),
+              GestureDetector(
+                onTap:()=> Navigator.of(ctx).pushReplacement(
                     MaterialPageRoute(
                       builder: (ctx) => const AuthScreen(),
                     ),
-                  );
-                },
-                child: const Text('Continue'),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    width: double.infinity,
+                    height: 50,
+                    child: const Center(child: Text('Continue'),),
+                  ),
               ),
-              const SizedBox(height: 16),
+           
             ],
           ),
         ),
@@ -69,14 +77,15 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(30),
         child: Column(
           
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 25,),
             Image.asset('assets/home-screen-image.png',
-            height: 200,
-            width: 200,
+            height: 350,
+            width: 350,
             errorBuilder: (context, error, stackTrace) {
             return const Text('Asset not found');
   },),
