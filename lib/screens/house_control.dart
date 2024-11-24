@@ -18,9 +18,9 @@ class ControlTabBar extends StatelessWidget {
           title: const Text('Smart Home Control'),
           bottom: const TabBar(
             tabs: [
-              Tab(icon: Icon(Icons.home), text: 'Controls'),
-              Tab(icon: Icon(Icons.show_chart), text: 'Charts'),
-              Tab(icon: Icon(Icons.settings), text: 'Settings'),
+              Tab(icon: Icon(Icons.home,color: Colors.green,), child: Text('Controls',style: TextStyle(color: Colors.green),),),
+              Tab(icon: Icon(Icons.show_chart,color: Colors.green,), child: Text('Charts',style: TextStyle(color: Colors.green),),),
+              Tab(icon: Icon(Icons.settings,color: Colors.green,), child: Text('Settings',style: TextStyle(color: Colors.green),),),
             ],
           ),
         ),

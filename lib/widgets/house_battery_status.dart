@@ -35,7 +35,7 @@ class HouseBatteryStatus extends StatelessWidget {
           ),
         ),
         Container(
-          width: MediaQuery.of(context).size.width,
+          width: MediaQuery.of(context).size.width*0.9,
           margin: const EdgeInsets.all(16.0),
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
@@ -112,7 +112,7 @@ class HouseBatteryStatus extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(width: 50),
+              const SizedBox(width: 25),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8,

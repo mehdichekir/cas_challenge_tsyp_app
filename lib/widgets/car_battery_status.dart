@@ -18,6 +18,7 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
   bool savingMode = false;
   @override
   Widget build(BuildContext context) {
+  final screenWidth = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -46,7 +47,7 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
                   children: [
                     Container(
                       height: 185,
-                      width: double.infinity,
+                      width: screenWidth*0.45,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Colors.green.shade300,
@@ -80,7 +81,7 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
 
                     Container(
                       height: 185,
-                      width: double.infinity,
+                      width: screenWidth*0.45,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Colors.green.shade300,
@@ -88,6 +89,7 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           const Text(
                             'Total Distance',
@@ -143,7 +145,7 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
               const SizedBox(width: 16),
               Expanded(
                 child: Container(
-                  width: double.infinity,
+                  width: screenWidth*0.5,
                   height: 384,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -195,27 +197,32 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
                         ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Saving mode',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
+                          Container(
+                            width: screenWidth*0.25,
+                            child: const Text(
+                              'Saving mode',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                              ),
                             ),
                           ),
-                          Switch(
-                            value: savingMode,
-                            onChanged: (value) {
-                              setState(() {
-                                savingMode = value;
-                              });
-                            },
-                            activeColor: Colors.white, 
-                            inactiveThumbColor:
-                                Colors.grey, 
-                            inactiveTrackColor:
-                                Colors.white, 
+                          SizedBox(
+                            width: screenWidth*0.1,
+                            child: Switch(
+                              value: savingMode,
+                              onChanged: (value) {
+                                setState(() {
+                                  savingMode = value;
+                                });
+                              },
+                              activeColor: Colors.white, 
+                              inactiveThumbColor:
+                                  Colors.grey, 
+                              inactiveTrackColor:
+                                  Colors.white, 
+                            ),
                           ),
                         ],
                       ),

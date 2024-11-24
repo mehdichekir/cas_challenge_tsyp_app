@@ -1,7 +1,7 @@
+import 'package:cas_tsyp_app/bottom_navbar.dart';
 import 'package:cas_tsyp_app/screens/energy_dashboard.dart';
 import 'package:cas_tsyp_app/screens/energy_history.dart';
 import 'package:cas_tsyp_app/screens/auth_screen.dart';
-import 'package:cas_tsyp_app/screens/house_control.dart';
 import 'package:cas_tsyp_app/screens/real_time_visualization.dart';
 import 'package:cas_tsyp_app/screens/system_status.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,8 @@ class MyApp extends StatelessWidget {
         EnergyDashboard.routeName:(context)=> const EnergyDashboard(),
         EnergyHistory.routeName:(context)=> const EnergyHistory(),
         RealTimeVisualization.routeName:(context)=> const RealTimeVisualization(),
-        SystemStatus.routeName:(context)=> const SystemStatus()
+        SystemStatus.routeName:(context)=> const SystemStatus(),
+        BottomNavbar.routeName:(context)=>const BottomNavbar()
       },
     );
   }
