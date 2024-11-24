@@ -1,3 +1,4 @@
+import 'package:cas_tsyp_app/helpers/notifications_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../helpers/smart_home_controller.dart';
@@ -23,13 +24,13 @@ class ControlsTab extends StatelessWidget {
                   style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
                 const SizedBox(height: 8),
                 _buildStatusRow('Temperature',
-                    '${controller.status.value['environment']?['temperature']}°C'),
+                    '${controller.status.value['environment']?['temperature']}°C', Icons.thermostat),
                 _buildStatusRow('Humidity',
-                    '${controller.status.value['environment']?['humidity']}%'),
-                _buildStatusRow('Fan',
+                    '${controller.status.value['environment']?['humidity']}%', Icons.water),
+                _buildStatusRow('AC',
                     controller.status.value['environment']?['fan_running'] == true
                         ? 'Running'
-                        : 'Off'),
+                        : 'Off', Icons.ac_unit),
               ],
             ),
           ),
@@ -57,8 +58,10 @@ class ControlsTab extends StatelessWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () =>
-                            controller.sendCommand('SET GARAGE CLOSE'),
+                        onPressed: () => {
+                          controller.sendCommand('SET GARAGE CLOSE'),
+                          NotificationService().showFireNotification(),
+                        },
                         child: const Text('Close Garage'),
                       ),
                     ),
@@ -110,12 +113,13 @@ class ControlsTab extends StatelessWidget {
     ));
   }
 
-  Widget _buildStatusRow(String label, String value) {
+  Widget _buildStatusRow(String label, String value, IconData icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Icon(icon),
           Text(label),
           Text(value),
         ],
