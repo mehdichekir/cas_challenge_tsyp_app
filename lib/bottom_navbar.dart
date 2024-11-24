@@ -18,8 +18,8 @@ class _BottomNavbarState extends State<BottomNavbar > {
   final List<Widget> _screens = [
     VisualizationTabBar(),
     ControlTabBar(),
-    const ProfileScreen(),
     const EnergyTableScreen(),
+    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -47,12 +47,12 @@ class _BottomNavbarState extends State<BottomNavbar > {
             label: ' Control',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: ' Profile',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today_outlined),
             label: ' Forecast',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: ' Profile',
           ),
         ],
         selectedItemColor: Colors.green.shade700,
