@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
+import '../structures/structure.dart';
 import 'notifications_service.dart';
 
 
 class SmartHomeController extends GetxController {
   late io.Socket socket;
-  final status = Rx<Map<String, dynamic>>({});
+  final Rxn<HomeData> status = Rxn<HomeData>();
   final temperatureHistory = <double>[].obs;
   final humidityHistory = <double>[].obs;
   final timeHistory = <DateTime>[].obs;
@@ -36,25 +39,23 @@ class SmartHomeController extends GetxController {
       Fluttertoast.showToast(msg: 'Disconnected from server');
     });
 
-    socket.on('status_update', (data) {
-      status.value = Map<String, dynamic>.from(data);
+    socket.on('arduino_data', (data) {
+      final homeData = HomeData.fromJson(data);
+      status.value = homeData;
 
-      // Update historical data
-      if (data['environment'] != null) {
-        temperatureHistory.add(data['environment']['temperature']);
-        humidityHistory.add(data['environment']['humidity']);
-        timeHistory.add(DateTime.now());
+      temperatureHistory.add(status.value!.environment.temperature / 1.0);
+      humidityHistory.add(status.value!.environment.humidity / 1.0);
+      timeHistory.add(DateTime.now());
 
-        // Keep last 100 readings
-        if (temperatureHistory.length > 100) {
-          temperatureHistory.removeAt(0);
-          humidityHistory.removeAt(0);
-          timeHistory.removeAt(0);
-        }
+      // Keep last 100 readings
+      if (temperatureHistory.length > 100) {
+        temperatureHistory.removeAt(0);
+        humidityHistory.removeAt(0);
+        timeHistory.removeAt(0);
       }
 
       // Check for fire alert
-      if (data['alarm'] != null && data['alarm']['fire_detected'] == true) {
+      if (homeData.alarm.fireDetected) {
         notificationService.showFireNotification();
       }
     });
