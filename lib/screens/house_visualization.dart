@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../helpers/smart_home_controller.dart';
-import 'package:cas_tsyp_app/screens/energy_dashboard.dart';
-import 'package:cas_tsyp_app/screens/real_time_visualization.dart';
-import 'package:cas_tsyp_app/screens/system_status.dart';
-import 'package:cas_tsyp_app/screens/energy_history.dart';
+import 'package:cas_tsyp_app/screens/visuals/energy_dashboard.dart';
+import 'package:cas_tsyp_app/screens/visuals/real_time_visualization.dart';
+import 'package:cas_tsyp_app/screens/visuals/system_status.dart';
+import 'package:cas_tsyp_app/screens/visuals/energy_history.dart';
 
 class VisualizationTabBar extends StatelessWidget {
   final controller = Get.put(SmartHomeController());

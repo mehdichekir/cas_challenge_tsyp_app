@@ -1,3 +1,4 @@
+import 'package:cas_tsyp_app/screens/ForeCast.dart';
 import 'package:cas_tsyp_app/screens/house_control.dart';
 import 'package:cas_tsyp_app/screens/house_visualization.dart';
 import 'package:cas_tsyp_app/screens/profile_screen.dart';
@@ -18,6 +19,7 @@ class _BottomNavbarState extends State<BottomNavbar > {
     VisualizationTabBar(),
     ControlTabBar(),
     const ProfileScreen(),
+    const EnergyTableScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -47,6 +49,10 @@ class _BottomNavbarState extends State<BottomNavbar > {
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
             label: ' Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today_outlined),
+            label: ' Forecast',
           ),
         ],
         selectedItemColor: Colors.green.shade700,
