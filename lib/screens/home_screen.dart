@@ -7,7 +7,6 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   void showSheet(BuildContext ctx) {
-    print('button pressed');
   showModalBottomSheet(
     context: ctx,
     isScrollControlled: true, 
@@ -35,7 +34,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 16),
               const Text(
-                'Welcome to Energify',
+                'Welcome to Power Hive',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.green),
               ),
               const SizedBox(height: 10),
@@ -84,13 +83,13 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 25,),
-            Image.asset('assets/home-screen-image.png',
+            Image.asset('assets/logo.png',
             height: 350,
             width: 350,
             errorBuilder: (context, error, stackTrace) {
             return const Text('Asset not found');
   },),
-            const Text('Energify',
+            const Text('Power Hive',
             style: TextStyle(color: Color.fromRGBO(150, 226, 77, 1),fontSize: 35,fontWeight: FontWeight.bold),
             ),
             const Text('Power up your life with clean energy',

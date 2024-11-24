@@ -1,3 +1,4 @@
+import 'package:cas_tsyp_app/helpers/notifications_service.dart';
 import 'package:cas_tsyp_app/screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,11 +62,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         content: const Text('Logout Confirmation'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: 
+            
+            
+            () => Navigator.of(context).pop(),
             child: const Text('cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed:  () {
               Navigator.of(context).pop();
               _signOut(context);
             },
@@ -80,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildProfileImage() {
     return const CircleAvatar(
       radius: _profileImageRadius,
-      backgroundImage: AssetImage('assets/icons/default_profile_pic_man.png')
+      backgroundImage: AssetImage('assets/jetxpo.jpg')
     );
   }
 
@@ -88,13 +92,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       children: [
         Text(
-          "${userData?["username"]} ",
+          "Mahdi Chekir",
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
-        Text('${userData?['email']}', style: theme.textTheme.titleMedium),
+        Text('mahdi.chekir@supcom.tn', style: theme.textTheme.titleMedium),
       ],
     );
   }

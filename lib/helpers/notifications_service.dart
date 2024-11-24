@@ -27,6 +27,11 @@ class NotificationService {
       'Fire Alerts',
       importance: Importance.high,
       priority: Priority.high,
+      sound: RawResourceAndroidNotificationSound('alarm'),
+      enableVibration: true,
+      category: AndroidNotificationCategory.alarm,
+      fullScreenIntent: true,
+      playSound: true
     );
 
     const NotificationDetails details = NotificationDetails(

@@ -1,3 +1,4 @@
+import 'package:cas_tsyp_app/widgets/forecast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -30,12 +31,13 @@ class EnergyTableScreen extends StatefulWidget {
 class _EnergyTableScreenState extends State<EnergyTableScreen> {
   late io.Socket socket;
   Map<String,double> energyData = {
-    'd1':120,
-    'd2':150,
-    'd3':140,
-    'd4':200,
-    'd5':100,
-    'd6':190
+    '24/11/2024':150,
+    '25/11/2024':160,
+    '26/11/2024':220,
+    '27/11/2024':180,
+    '28/11/2024 ':80,
+    '29/11/2024':105,
+    '30/11/2024':240
   };
 
   @override
@@ -82,135 +84,26 @@ class _EnergyTableScreenState extends State<EnergyTableScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Energy'),
-        backgroundColor: const Color(0xFF3F51B5),
-      ),
+          title: null, 
+          flexibleSpace: const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "Power Supply Analysis",
+                  textAlign: TextAlign.center, 
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Colors.transparent
+        ),
       body: EnergyTableWidget(energyData: energyData),
     );
   }
 }
 
-class EnergyTableWidget extends StatelessWidget {
-  final Map<String,double> energyData;
-
-  const EnergyTableWidget({
-    Key? key,
-    required this.energyData,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color(0xFF3F51B5).withOpacity(0.8),
-            const Color(0xFF3F51B5),
-          ],
-        ),
-      ),
-      child: Column(
-        children: [
-          const Text(
-            'Your Energy',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Card(
-            elevation: 8,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(2),
-                  1: FlexColumnWidth(1),
-                  2: FlexColumnWidth(1),
-                },
-                children: [
-                  TableRow(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey[300]!,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          'Day',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          'GHI',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          'W',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  
-                  ...energyData.entries.map((data) => TableRow(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text(
-                              data.key,
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text(
-                              data.value.toString(),
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text(
-                              '${double.parse((data.value * 0.092).toStringAsFixed(2)) }',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ],
-                      )),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

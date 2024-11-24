@@ -3,117 +3,170 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../helpers/smart_home_controller.dart';
 
-class ControlsTab extends StatelessWidget {
-  final controller = Get.find<SmartHomeController>();
+class ControlsTab extends StatefulWidget {
 
   ControlsTab({super.key});
 
   @override
+  State<ControlsTab> createState() => _ControlsTabState();
+}
+
+class _ControlsTabState extends State<ControlsTab> {
+  final controller = Get.find<SmartHomeController>();
+
+  @override
   Widget build(BuildContext context) {
     return Obx(() => ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        // Status Card
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('System Status',
-                  style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-                const SizedBox(height: 8),
-                _buildStatusRow('Temperature',
-                    '${controller.status.value['environment']?['temperature']}°C', Icons.thermostat),
-                _buildStatusRow('Humidity',
-                    '${controller.status.value['environment']?['humidity']}%', Icons.water),
-                _buildStatusRow('AC',
-                    controller.status.value['environment']?['fan_running'] == true
-                        ? 'Running'
-                        : 'Off', Icons.ac_unit),
-                FloatingActionButton(
-                    onPressed: () => controller.sendCommand('TOGGLE AC'),
-                )
-              ],
-            ),
-          ),
-        ),
-
-        // Doors Control Card
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Doors Control',
-                  style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-                const SizedBox(height: 16),
-                Row(
+          padding: const EdgeInsets.all(16),
+          children: [
+            // Status Card
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () =>
-                            controller.sendCommand('SET GARAGE OPEN'),
-                        child: const Text('Open Garage'),
-                      ),
+                    const Text(
+                      'System Status',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () => {
-                          controller.sendCommand('SET GARAGE CLOSE'),
-                          NotificationService().showFireNotification(),
-                        },
-                        child: const Text('Close Garage'),
-                      ),
+                    const SizedBox(height: 8),
+                    _buildStatusRow(
+                        'Temperature',
+                        '${controller.status.value['environment']?['temperature']}°C',
+                        Icons.thermostat),
+                    _buildStatusRow(
+                        'Humidity',
+                        '${controller.status.value['environment']?['humidity']}%',
+                        Icons.water),
+                    _buildStatusRow(
+                        'AC',
+                        controller.status.value['environment']
+                                    ?['fan_running'] ==
+                                true
+                            ? 'Running'
+                            : 'Off',
+                        Icons.ac_unit),
+                  ],
+                ),
+              ),
+            ),
+             Card(
+              child: Padding(
+                padding:const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'AC control',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              controller.status.value['environment']?['fan_running'] = !controller.status.value['environment']?['fan_running'] ;
+                            });
+                          },
+                          icon: const Icon(Icons.timer),
+                          label: Text(controller.status.value['environment']?['fan_running'] ==true
+                              ? 'Turn off Air Conditionner'
+                              : 'Turn on Air Conditionner'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                Row(
+              ),
+            ),
+
+            // Doors Control Card
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () =>
-                            controller.sendCommand('SET FRONTDOOR OPEN'),
-                        child: const Text('Open Front Door'),
-                      ),
+                    const Text(
+                      'Doors Control',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () =>
-                            controller.sendCommand('SET FRONTDOOR CLOSE'),
-                        child: const Text('Close Front Door'),
-                      ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                controller.sendCommand('SET GARAGE OPEN'),
+                            child: const Text('Open Garage'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () => {
+                              controller.sendCommand('SET GARAGE CLOSE'),
+                              NotificationService().showFireNotification()
+                            },
+                            child: const Text('Close Garage'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                controller.sendCommand('SET FRONTDOOR OPEN'),
+                            child: const Text('Open Front Door'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                controller.sendCommand('SET FRONTDOOR CLOSE'),
+                            child: const Text('Close Front Door'),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
 
-        // Lights Control Card
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Lights Control',
-                  style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-                const SizedBox(height: 16),
-                _buildLightControls('BEDROOM'),
-                const SizedBox(height: 16),
-                _buildLightControls('TOILET'),
-              ],
+            // Lights Control Card
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Lights Control',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildLightControls('BEDROOM'),
+                    const SizedBox(height: 16),
+                    _buildLightControls('TOILET'),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-      ],
-    ));
+           
+          ],
+        ));
   }
 
   Widget _buildStatusRow(String label, String value, IconData icon) {
@@ -137,7 +190,6 @@ class ControlsTab extends StatelessWidget {
     );
   }
 }
-
 
 class DurationPickerDialog extends StatefulWidget {
   final Function(int milliseconds) onDurationSelected;
