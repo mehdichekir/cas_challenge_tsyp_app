@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class HomeScreen extends StatelessWidget {
+  static const routeName= '/Home_screen';
   const HomeScreen({super.key});
 
   void showSheet(BuildContext ctx) {

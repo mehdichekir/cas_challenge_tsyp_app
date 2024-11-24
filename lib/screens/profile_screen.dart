@@ -1,7 +1,10 @@
+import 'package:cas_tsyp_app/screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
+import '../widgets/widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,6 +14,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late String userEmail;
+  late Map<String, String> userData;
+  bool isLoading = true;
   // Constants
   static const double _profileImageRadius = 65.0;
   static const EdgeInsets _screenPadding = EdgeInsets.only(
@@ -22,21 +28,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // State variables
   String _appVersion = "";
-  final  userId = FirebaseAuth.instance.currentUser!.uid;
-  final UserData = FirebaseFirestore.instance.doc('User').collection(userId);
   
+
+ Future<void> getUserData() async{
+    final  userId = FirebaseAuth.instance.currentUser!.uid;
+  final snapShot = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+  userData = snapShot.data() as Map<String,String>;
+  setState(() {
+    isLoading = false;
+  });
+  }
 
   @override
   void initState() {
-    super.initState();
-    _initializeData();
+   super.initState();
+   getUserData();
   }
 
   // Initialization methods
-  Future<void> _initializeData() async {
+  /*Future<void> _initializeData() async {
     await _loadAppVersion();
     _loadUserData();
-  }
+  }*/
 
   Future<void> _loadAppVersion() async {
     final packageInfo = await PackageInfo.fromPlatform();
@@ -45,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  Future<void> _loadUserData() async {
+  /**Future<void> _loadUserData() async {
     try {
       setState(() {
         samsarUser = _userManager.samsarUser;
@@ -53,16 +66,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } catch (e) {
       if (mounted) showSnackBar(context, S.of(context).errorLoadingUserData(e));
     }
-  }
+  }*/
 
   Future<void> _signOut(BuildContext context) async {
     try {
-      await _userManager.signOut();
+      await FirebaseAuth.instance.signOut();
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, AppRoutes.login);
+        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       }
     } catch (e) {
-      if (context.mounted) showSnackBar(context, S.of(context).errorSigningOut(e));
+      if (context.mounted) showSnackBar(context, 'errorSigningOut');
     }
   }
 
@@ -70,19 +83,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text(S.of(context).logout),
-        content: Text(S.of(context).logoutConfirmation),
+        title: const Text('logout'),
+        content: const Text('logoutConfirmation'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(S.of(context).cancel),
+            child: const Text('cancel'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
               _signOut(context);
             },
-            child: Text(S.of(context).logout),
+            child: const Text('logout'),
           ),
         ],
       ),
@@ -101,13 +114,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       children: [
         Text(
-          "${samsarUser!.firstName} ${samsarUser!.middleName}${samsarUser!.middleName != "" ? " " : ""}${samsarUser!.lastName}",
+          "${userData["username"]} ",
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
-        Text(samsarUser!.email, style: theme.textTheme.titleMedium),
+        Text('${userData['email']}', style: theme.textTheme.titleMedium),
       ],
     );
   }
@@ -118,38 +131,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
         settingScreenItem(
           context,
           icon: Icons.settings,
-          itemName: S.of(context).settings,
-          page: AppRoutes.appSettings,
+          itemName: 'settings',
+          page: 'settings'
         ),
         settingScreenItem(
           context,
           imagePath: "assets/icons/my_houses.png",
-          itemName: S.of(context).myHouses,
-          page: AppRoutes.myHouses,
+          itemName:'myHouses',
+          page: 'My Houses',
         ),
         settingScreenItem(
           context,
           imagePath: "assets/icons/fav_houses.png",
-          itemName: S.of(context).favouriteHouses,
-          page: AppRoutes.favouriteHouses,
+          itemName: 'favouriteHouses',
+          page: 'favouriteHouses',
         ),
         ListTile(
           leading: Icon(Icons.person_rounded, color: theme.primaryColor),
-          title: Text(S.of(context).personalAccount, style: theme.textTheme.titleSmall),
-          onTap: () {
-            Navigator.pushNamed(context, AppRoutes.editProfile)
-                .then((_) => _loadUserData());
-          },
+          title: Text('personalAccount', style: theme.textTheme.titleSmall),
+          onTap: () {},
         ),
         settingScreenItem(
           context,
           icon: Icons.support_agent,
-          itemName: S.of(context).contactSupport,
-          page: AppRoutes.contactSupport,
+          itemName: 'contactSupport',
+          page:'contactSupport',
         ),
         ListTile(
           leading: Icon(Icons.exit_to_app, color: theme.primaryColor),
-          title: Text(S.of(context).logout, style: theme.textTheme.titleSmall),
+          title: Text('logout', style: theme.textTheme.titleSmall),
           onTap: () => _handleLogout(context),
         ),
       ],
@@ -159,11 +169,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (samsarUser == null) {
+
+    if(isLoading) {
+      return const CustomLoadingScreen(message: "Loading...",);
+    }
+    /*if (userData == null) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
-    }
+    }*/
 
     final theme = Theme.of(context);
 
