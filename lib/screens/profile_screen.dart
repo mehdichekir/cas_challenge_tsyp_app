@@ -2,7 +2,6 @@ import 'package:cas_tsyp_app/screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../widgets/widgets.dart';
 
@@ -15,8 +14,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late String userEmail;
-  late Map<String, String> userData;
+  late Map<String, dynamic>? userData;
   bool isLoading = true;
+  final String _appVersion = 'App Version 1.0.0';
   // Constants
   static const double _profileImageRadius = 65.0;
   static const EdgeInsets _screenPadding = EdgeInsets.only(
@@ -26,9 +26,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     bottom: 16.0,
   );
 
-  // State variables
-  String _appVersion = "";
-  
 
  Future<void> getUserData() async{
   final  userId = FirebaseAuth.instance.currentUser!.uid;
@@ -45,29 +42,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
    getUserData();
   }
 
-  // Initialization methods
-  /*Future<void> _initializeData() async {
-    await _loadAppVersion();
-    _loadUserData();
-  }*/
-
-  Future<void> _loadAppVersion() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      _appVersion = "Version ${packageInfo.version} +${packageInfo.buildNumber}";
-    });
-  }
-
-  /**Future<void> _loadUserData() async {
-    try {
-      setState(() {
-        samsarUser = _userManager.samsarUser;
-      });
-    } catch (e) {
-      if (mounted) showSnackBar(context, S.of(context).errorLoadingUserData(e));
-    }
-  }*/
-
   Future<void> _signOut(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
@@ -75,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       }
     } catch (e) {
-      if (context.mounted) showSnackBar(context, 'errorSigningOut');
+      if (context.mounted) showSnackBar(context, 'Error Signing Out');
     }
   }
 
@@ -83,8 +57,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('logout'),
-        content: const Text('logoutConfirmation'),
+        title: const Text('Logout'),
+        content: const Text('Logout Confirmation'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -114,13 +88,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       children: [
         Text(
-          "${userData["username"]} ",
+          "${userData?["username"]} ",
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
-        Text('${userData['email']}', style: theme.textTheme.titleMedium),
+        Text('${userData?['email']}', style: theme.textTheme.titleMedium),
       ],
     );
   }
@@ -131,35 +105,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         settingScreenItem(
           context,
           icon: Icons.settings,
-          itemName: 'settings',
-          page: 'settings'
-        ),
-        settingScreenItem(
-          context,
-          imagePath: "assets/icons/my_houses.png",
-          itemName:'myHouses',
-          page: 'My Houses',
-        ),
-        settingScreenItem(
-          context,
-          imagePath: "assets/icons/fav_houses.png",
-          itemName: 'favouriteHouses',
-          page: 'favouriteHouses',
+          itemName: 'Settings',
+          page: 'Settings'
         ),
         ListTile(
           leading: Icon(Icons.person_rounded, color: theme.primaryColor),
-          title: Text('personalAccount', style: theme.textTheme.titleSmall),
+          title: Text('Personal Account', style: theme.textTheme.titleSmall),
           onTap: () {},
         ),
         settingScreenItem(
           context,
           icon: Icons.support_agent,
-          itemName: 'contactSupport',
-          page:'contactSupport',
+          itemName: 'Contact Support',
+          page:'Contact Support',
         ),
         ListTile(
           leading: Icon(Icons.exit_to_app, color: theme.primaryColor),
-          title: Text('logout', style: theme.textTheme.titleSmall),
+          title: Text('Logout', style: theme.textTheme.titleSmall),
           onTap: () => _handleLogout(context),
         ),
       ],

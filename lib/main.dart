@@ -1,11 +1,11 @@
 import 'package:cas_tsyp_app/bottom_navbar.dart';
-import 'package:cas_tsyp_app/screens/energy_dashboard.dart';
-import 'package:cas_tsyp_app/screens/energy_history.dart';
+import 'package:cas_tsyp_app/screens/visuals/energy_dashboard.dart';
+import 'package:cas_tsyp_app/screens/visuals/energy_history.dart';
 import 'package:cas_tsyp_app/screens/auth_screen.dart';
 import 'package:cas_tsyp_app/screens/home_screen.dart';
 import 'package:cas_tsyp_app/screens/profile_screen.dart';
-import 'package:cas_tsyp_app/screens/real_time_visualization.dart';
-import 'package:cas_tsyp_app/screens/system_status.dart';
+import 'package:cas_tsyp_app/screens/visuals/real_time_visualization.dart';
+import 'package:cas_tsyp_app/screens/visuals/system_status.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ProfileScreen(),
+      home: const AuthWrapper(),
       routes: {
         AuthScreen.routeName:(context)=> const AuthScreen(),
         EnergyDashboard.routeName:(context)=> const EnergyDashboard(),

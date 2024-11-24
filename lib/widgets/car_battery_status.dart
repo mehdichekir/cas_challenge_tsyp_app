@@ -199,12 +199,12 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
                       Row(
                         children: [
                           Container(
-                            width: screenWidth*0.25,
+                            width: screenWidth*0.23,
                             child: const Text(
                               'Saving mode',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 13,
+                                fontSize: 12,
                               ),
                             ),
                           ),

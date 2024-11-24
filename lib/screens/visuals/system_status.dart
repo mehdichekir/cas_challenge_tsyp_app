@@ -15,10 +15,6 @@ class _SystemStatusState extends State<SystemStatus> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text('System Status'),
-      ),
       body:  SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
