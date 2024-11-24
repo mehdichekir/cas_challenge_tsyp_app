@@ -15,7 +15,17 @@ class ControlTabBar extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Smart Home Control'),
+          title: null,
+          flexibleSpace: const Center(
+            child: Text(
+              'Smart Home Control',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           bottom: const TabBar(
             tabs: [
               Tab(icon: Icon(Icons.home,color: Colors.green,), child: Text('Controls',style: TextStyle(color: Colors.green),),),

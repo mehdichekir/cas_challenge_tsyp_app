@@ -13,12 +13,8 @@ class _RealTimeVisualizationState extends State<RealTimeVisualization> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text('Real Time Data Visualization'),
-      ),
-      body: const RealTimeVisLineChart(),
+    return const Scaffold(
+      body: RealTimeVisLineChart(),
     );
   }
 }

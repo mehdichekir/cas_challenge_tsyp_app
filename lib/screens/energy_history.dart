@@ -12,12 +12,8 @@ class EnergyHistory extends StatefulWidget {
 class _EnergyHistoryState extends State<EnergyHistory> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Energy History'),
-        backgroundColor: Colors.green,
-      ),
-      body: const Column(
+    return const Scaffold(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: 50,),
