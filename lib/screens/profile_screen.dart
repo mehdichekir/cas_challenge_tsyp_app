@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -19,9 +21,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   );
 
   // State variables
-  final UserManager _userManager = UserManager();
   String _appVersion = "";
-  SamsarUser? samsarUser;
+  final  userId = FirebaseAuth.instance.currentUser!.uid;
+  final UserData = FirebaseFirestore.instance.doc('User').collection(userId);
+  
 
   @override
   void initState() {
@@ -88,12 +91,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
   Widget _buildProfileImage() {
-    return CircleAvatar(
+    return const CircleAvatar(
       radius: _profileImageRadius,
-      backgroundImage: samsarUser?.profileImage.isNotEmpty == true
-          ? NetworkImage(samsarUser!.profileImage)
-          : const AssetImage('assets/icons/default_profile_pic_man.png')
-      as ImageProvider,
+      backgroundImage: AssetImage('assets/icons/default_profile_pic_man.png')
     );
   }
 
