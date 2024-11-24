@@ -5,19 +5,16 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 class DailyEnergy {
   final String day;
   final double ghi;
-  final double watts;
 
   DailyEnergy({
     required this.day,
     required this.ghi,
-    required this.watts,
   });
 
   factory DailyEnergy.fromJson(Map<String, dynamic> json) {
     return DailyEnergy(
       day: json['day'] as String,
       ghi: double.parse(json['ghi'].toString()),
-      watts: double.parse(json['watts'].toString()),
     );
   }
 }
@@ -32,7 +29,14 @@ class EnergyTableScreen extends StatefulWidget {
 
 class _EnergyTableScreenState extends State<EnergyTableScreen> {
   late io.Socket socket;
-  List<DailyEnergy> energyData = [];
+  Map<String,double> energyData = {
+    'd1':120,
+    'd2':150,
+    'd3':140,
+    'd4':200,
+    'd5':100,
+    'd6':190
+  };
 
   @override
   void initState() {
@@ -56,9 +60,8 @@ class _EnergyTableScreenState extends State<EnergyTableScreen> {
     socket.on('energyData', (data) {
       if (mounted) {
         setState(() {
-          energyData = (data as List)
-              .map((item) => DailyEnergy.fromJson(item))
-              .toList();
+          energyData =
+              data.map((item) => DailyEnergy.fromJson(item)).toList();
         });
       }
     });
@@ -88,7 +91,7 @@ class _EnergyTableScreenState extends State<EnergyTableScreen> {
 }
 
 class EnergyTableWidget extends StatelessWidget {
-  final List<DailyEnergy> energyData;
+  final Map<String,double> energyData;
 
   const EnergyTableWidget({
     Key? key,
@@ -176,31 +179,32 @@ class EnergyTableWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  ...energyData.map((data) => TableRow(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Text(
-                          data.day,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Text(
-                          data.ghi.toString(),
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Text(
-                          data.watts.toString(),
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  )),
+                  
+                  ...energyData.entries.map((data) => TableRow(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Text(
+                              data.key,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Text(
+                              data.value.toString(),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Text(
+                              '${double.parse((data.value * 0.092).toStringAsFixed(2)) }',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      )),
                 ],
               ),
             ),

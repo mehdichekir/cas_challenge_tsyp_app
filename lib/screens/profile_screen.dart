@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final  userId = FirebaseAuth.instance.currentUser!.uid;
   final snapShot = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
   setState(() {
-  userData = snapShot.data() as Map<String,String>;
+  userData = snapShot.data() ;
     isLoading = false;
   });
   }

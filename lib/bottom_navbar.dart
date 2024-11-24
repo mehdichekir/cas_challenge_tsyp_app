@@ -1,4 +1,4 @@
-import 'package:cas_tsyp_app/screens/ForeCast.dart';
+import 'package:cas_tsyp_app/screens/forecast/ForeCast.dart';
 import 'package:cas_tsyp_app/screens/house_control.dart';
 import 'package:cas_tsyp_app/screens/house_visualization.dart';
 import 'package:cas_tsyp_app/screens/profile_screen.dart';
