@@ -35,6 +35,7 @@ class HouseBatteryStatus extends StatelessWidget {
           ),
         ),
         Container(
+          width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.all(16.0),
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
@@ -50,6 +51,7 @@ class HouseBatteryStatus extends StatelessWidget {
             ],
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Stack(
                 children: [

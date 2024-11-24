@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -43,10 +44,10 @@ class MyApp extends StatelessWidget {
       home: const AuthWrapper(),
       routes: {
         AuthScreen.routeName:(context)=> const AuthScreen(),
-        EnergyDashboard.routeName:(context)=> EnergyDashboard(),
-        EnergyHistory.routeName:(context)=> EnergyHistory(),
-        RealTimeVisualization.routeName:(context)=> RealTimeVisualization(),
-        SystemStatus.routeName:(context)=> SystemStatus()
+        EnergyDashboard.routeName:(context)=> const EnergyDashboard(),
+        EnergyHistory.routeName:(context)=> const EnergyHistory(),
+        RealTimeVisualization.routeName:(context)=> const RealTimeVisualization(),
+        SystemStatus.routeName:(context)=> const SystemStatus()
       },
     );
   }

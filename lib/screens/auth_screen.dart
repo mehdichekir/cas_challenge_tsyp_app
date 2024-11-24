@@ -33,15 +33,12 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
-        // Remove navigation as AuthWrapper will handle it
       } else {
         userCredential = await auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
-        // Remove navigation as AuthWrapper will handle it
-
-        await FirebaseFirestore.instance
+          await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
             .set({

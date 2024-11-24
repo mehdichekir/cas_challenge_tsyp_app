@@ -96,8 +96,9 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
                               fontSize: 16,
                             ),
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(height: 15),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const Icon(
                                 Icons.electric_car,
@@ -106,16 +107,16 @@ class _CarBatteryStatusState extends State<CarBatteryStatus> {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                '${widget.totalDistance.toStringAsFixed(0)} Km',
+                               ' ${widget.totalDistance.toStringAsFixed(0)} Km',
                                 style: const TextStyle(
                                   color: Colors.blue,
-                                  fontSize: 24,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
