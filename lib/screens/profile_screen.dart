@@ -31,10 +31,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   
 
  Future<void> getUserData() async{
-    final  userId = FirebaseAuth.instance.currentUser!.uid;
+  final  userId = FirebaseAuth.instance.currentUser!.uid;
   final snapShot = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
-  userData = snapShot.data() as Map<String,String>;
   setState(() {
+  userData = snapShot.data() as Map<String,String>;
     isLoading = false;
   });
   }
