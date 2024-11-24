@@ -1,16 +1,18 @@
 import 'package:cas_tsyp_app/screens/energy_dashboard.dart';
 import 'package:cas_tsyp_app/screens/energy_history.dart';
 import 'package:cas_tsyp_app/screens/auth_screen.dart';
+import 'package:cas_tsyp_app/screens/house_control.dart';
 import 'package:cas_tsyp_app/screens/real_time_visualization.dart';
 import 'package:cas_tsyp_app/screens/system_status.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'helpers/auth_wrapper.dart';
+import 'helpers/notifications_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await NotificationService().init();
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -43,10 +45,10 @@ class MyApp extends StatelessWidget {
       home: const AuthWrapper(),
       routes: {
         AuthScreen.routeName:(context)=> const AuthScreen(),
-        EnergyDashboard.routeName:(context)=> EnergyDashboard(),
-        EnergyHistory.routeName:(context)=> EnergyHistory(),
-        RealTimeVisualization.routeName:(context)=> RealTimeVisualization(),
-        SystemStatus.routeName:(context)=> SystemStatus()
+        EnergyDashboard.routeName:(context)=> const EnergyDashboard(),
+        EnergyHistory.routeName:(context)=> const EnergyHistory(),
+        RealTimeVisualization.routeName:(context)=> const RealTimeVisualization(),
+        SystemStatus.routeName:(context)=> const SystemStatus()
       },
     );
   }

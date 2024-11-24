@@ -1,4 +1,5 @@
 import 'package:cas_tsyp_app/screens/energy_dashboard.dart';
+import 'package:cas_tsyp_app/screens/house_control.dart';
 import 'package:cas_tsyp_app/screens/real_time_visualization.dart';
 import 'package:cas_tsyp_app/screens/system_status.dart';
 import 'package:cas_tsyp_app/screens/energy_history.dart';
@@ -15,11 +16,12 @@ class BottomNavbar extends StatefulWidget {
 class _BottomNavbarState extends State<BottomNavbar > {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = const [
-    RealTimeVisualization(),
-    SystemStatus(),
-    EnergyHistory(),
-    EnergyDashboard(),
+  final List<Widget> _screens = [
+    const RealTimeVisualization(),
+    const SystemStatus(),
+    ControlTabBar(),
+    const EnergyHistory(),
+    const EnergyDashboard(),
   ];
 
   void _onItemTapped(int index) {
@@ -45,6 +47,10 @@ class _BottomNavbarState extends State<BottomNavbar > {
           BottomNavigationBarItem(
             icon: Icon(Icons.access_time_outlined),
             label: ' Status',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_remote_outlined),
+            label: ' Control',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people_outlined),
