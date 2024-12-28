@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -27,6 +25,7 @@ class SmartHomeController extends GetxController {
     socket = io.io(serverUrl, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': true,
+      "logging": true,
     });
 
     socket.onConnect((_) {
@@ -40,6 +39,8 @@ class SmartHomeController extends GetxController {
     });
 
     socket.on('arduino_data', (data) {
+      print("got data");
+      print(data);
       final homeData = HomeData.fromJson(data);
       status.value = homeData;
 
@@ -58,6 +59,18 @@ class SmartHomeController extends GetxController {
       if (homeData.alarm.fireDetected) {
         notificationService.showFireNotification();
       }
+    });
+
+    socket.on('test', (data) {
+      print('Test event received: $data');
+    });
+
+    socket.onError((error) {
+      print('Socket error: $error');  // Debug error
+    });
+
+    socket.onConnectError((error) {
+      print('Socket connect error: $error');  // Debug connection error
     });
   }
 

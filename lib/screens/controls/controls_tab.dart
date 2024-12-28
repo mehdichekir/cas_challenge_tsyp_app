@@ -30,11 +30,11 @@ class _ControlsTabState extends State<ControlsTab> {
                   style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
                 const SizedBox(height: 8),
                 _buildStatusRow('Temperature',
-                    '${widget.controller.status.value!.environment.temperature}°C', Icons.thermostat),
+                    '${widget.controller.status.value?.environment.temperature ?? 0}°C', Icons.thermostat),
                 _buildStatusRow('Humidity',
-                    '${widget.controller.status.value!.environment.humidity}%', Icons.water),
+                    '${widget.controller.status.value?.environment.humidity ?? 0}%', Icons.water),
                 _buildStatusRow('AC',
-                    widget.controller.status.value!.environment.fanRunning
+                    widget.controller.status.value?.environment.fanRunning ?? false
                         ? 'Running'
                         : 'Off', Icons.ac_unit),
                 Container(
